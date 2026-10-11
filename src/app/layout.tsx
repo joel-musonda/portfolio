@@ -14,7 +14,7 @@ const mono = JetBrains_Mono({
 })
 
 export const metadata: Metadata = {
-  title: 'Joel Musonda | Software Developer & Writer',
+  title: 'Joel Musonda | Software',
   description: 'Minimalist personal website and blog.',
 }
 
@@ -34,24 +34,24 @@ export default function RootLayout({
               Joel Musonda
             </Link>
             <div className="flex items-center space-x-6 text-sm text-neutral-400">
-              <Link href="/#projects" className="hover:text-neutral-100 transition-colors">
-                Projects
-              </Link>
-              <Link href="/#blog" className="hover:text-neutral-100 transition-colors">
-                Blog
-              </Link>
-               <Link href="/#blog" className="hover:text-neutral-100 transition-colors">
-                Questions
-              </Link>
-              <a 
-                href="https://github.com/joel-musonda" 
-                target="_blank" 
-                rel="noreferrer"
-                className="hover:text-neutral-100 transition-colors"
-              >
-                github ↗
-              </a>
-            </div>
+  <Link href="/projects" className="hover:text-neutral-100 transition-colors">
+    Projects
+  </Link>
+  <Link href="/blog" className="hover:text-neutral-100 transition-colors">
+    Blog
+  </Link>
+  <Link href="/questions" className="hover:text-neutral-100 transition-colors">
+    Questions
+  </Link>
+  <a 
+    href="https://github.com/joel-musonda" 
+    target="_blank" 
+    rel="noreferrer"
+    className="hover:text-neutral-100 transition-colors"
+  >
+    github ↗
+  </a>
+</div>
           </nav>
         </header>
 
