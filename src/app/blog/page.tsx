@@ -13,7 +13,7 @@ export default function BlogPageIndex() {
       <header className="space-y-2">
         <h1 className="text-2xl font-bold tracking-tight text-neutral-100">Blog</h1>
         <p className="text-neutral-400 text-sm">
-          Thoughts on software, ai, life, entrepreneuarship and building products.
+          Thoughts on Software engineering, AI, Life, Entrepreneurship and building products.
         </p>
       </header>
 
