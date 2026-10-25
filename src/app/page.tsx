@@ -26,10 +26,10 @@ export default function Home() {
       {/* Hero Section */}
       <section className="space-y-4 pt-4">
         <h1 className="text-3xl font-bold tracking-tight text-neutral-100 sm:text-4xl">
-          Hi, I love building stuff & writing.
+          Hi, I'm Joel,
         </h1>
         <p className="text-neutral-400 leading-relaxed text-base">
-          I&apos;m fascinated by neural networks, human-computer interaction, and deep learning.
+        A software developer, writer and aspiring AI Researcher. I&apos;m fascinated by neural networks, human-computer interaction, and deep learning.
           AI is going to change the way we work, learn, and create. Can we build it to continuously perceive the world, learn from it, and make decisions based on that knowledge?
           Can we proliferate it to every human being on the planet so we all have access to the same knowledge and information?
         </p>
@@ -52,7 +52,7 @@ export default function Home() {
             Currently, I&apos;m the founder and lead organizer of <a href="https://tedxcruciblelusaka.netlify.app" target="_blank" rel="noreferrer" className="text-neutral-200 underline underline-offset-4 hover:text-white transition-colors">TEDx Crucible Lusaka</a>; previously I co-founded an electronics maker lab, where we repurposed discarded e-waste to build robotics projects.
           </p>
           <p>
-            When I&apos;m not writing code or building stuff, you can find me playing Go, walking in a park, playing padel, or hiking and camping with friends and family. 
+            When I&apos;m not writing code or building stuff, you can find me playing Go, padel or swimming. I also enjoy walking in parks, hiking as well as camping with friends and family. 
           </p>
           <p className="text-neutral-300 font-medium">
             I actively respond to emails and am always open to connecting with like-minded individuals. Say hello!
