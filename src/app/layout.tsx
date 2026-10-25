@@ -62,10 +62,7 @@ export default function RootLayout({
 
         {/* Minimal Footer */}
         <footer className="max-w-2xl mx-auto px-4 py-8 w-full border-t border-neutral-900 text-xs text-neutral-500 flex justify-between items-center">
-          <p>© {new Date().getFullYear()} • Built with Next.js & Tailwind</p>
-          <p className="flex items-center gap-1.5">
-            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" /> Available for projects
-          </p>
+          <p>© {new Date().getFullYear()} • Built by Joel Musonda</p>
         </footer>
 
       </body>

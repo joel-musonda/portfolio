@@ -25,7 +25,8 @@ export default function ProjectsPage() {
       <header className="space-y-2">
         <h1 className="text-2xl font-bold tracking-tight text-neutral-100">Projects</h1>
         <p className="text-neutral-400 text-sm">
-          A selection of full-stack apps, experiments, and community web projects.
+          I like building things because 
+          building gives me a very efficient way of discovering what I don't understand.
         </p>
       </header>
 
