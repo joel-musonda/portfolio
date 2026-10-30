@@ -26,10 +26,10 @@ export default function Home() {
       {/* Hero Section */}
       <section className="space-y-4 pt-4">
         <h1 className="text-3xl font-bold tracking-tight text-neutral-100 sm:text-4xl">
-          Hi, I'm Joel,
+          Hi, I'm Joel
         </h1>
         <p className="text-neutral-400 leading-relaxed text-base">
-        A software developer, writer and aspiring AI Researcher. I&apos;m fascinated by neural networks, human-computer interaction, and deep learning.
+        A Computer Programmer, writer and aspiring AI Researcher. I&apos;m fascinated by neural networks, human-computer interaction, and deep learning.
           AI is going to change the way we work, learn, and create. Can we build it to continuously perceive the world, learn from it, and make decisions based on that knowledge?
           Can we proliferate it to every human being on the planet so we all have access to the same knowledge and information?
         </p>

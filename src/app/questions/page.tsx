@@ -1,7 +1,7 @@
 const faqs = [
   {
-    question: 'Why is teleportation hard',
-    answer: 'Exctited about what the answers to this question might be.'
+    question: 'Why is teleportation hard?',
+    answer: 'Teleportation is hard because it requires the ability to transmit the complete quantum state of a particle or object from one location to another without physically moving it. This involves overcoming several challenges, including the need for entanglement, precise measurement, and the no-cloning theorem, which states that it is impossible to create an identical copy of an arbitrary unknown quantum state. Teleportation of macroscopic objects would require an enormous amount of information to be transmitted, making it currently impractical with our existing technology.'
   },
   {
     question: 'Will we ever come up with better ways of measuring economic growth?',
@@ -17,7 +17,7 @@ const faqs = [
     answer: "One approach is to use transfer learning, where a pre-trained model is fine-tuned on a smaller dataset. Another approach is to use semi-supervised learning, where the model is trained on a combination of labeled and unlabeled data. Additionally, techniques like data augmentation and synthetic data generation can help increase the effective size of the training dataset. curious to explore other methods"
   },
   {
-    question: "Why is quntum computing so hard?",
+    question: "Why is Quntum computing so hard?",
     answer: "Quantum computing relies on the principles of quantum mechanics, which are fundamentally different from classical physics. Quantum systems are highly sensitive to their environment, making them prone to errors and decoherence. Building and controlling qubits, the basic units of quantum information, is a complex task that requires advanced technology and precise engineering. The field is still in its early stages, and researchers are actively working on developing more stable qubits and error-correction techniques."
   },
   {

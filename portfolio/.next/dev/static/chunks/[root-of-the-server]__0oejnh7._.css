@@ -197,8 +197,12 @@
 
 @layer theme {
   :root, :host {
-    --font-sans: var(--font-geist-sans);
-    --font-mono: var(--font-geist-mono);
+    --font-sans: var(--font-sans, Arial, Helvetica, sans-serif);
+    --font-mono: var(--font-mono, monospace);
+    --color-slate-200: #e2e8f0;
+    --color-slate-400: #90a1b9;
+    --color-slate-500: #62748e;
+    --color-slate-800: #1d293d;
     --color-neutral-100: #f5f5f5;
     --color-neutral-200: #e5e5e5;
     --color-neutral-300: #d4d4d4;
@@ -238,12 +242,16 @@
     --aspect-video: 16 / 9;
     --default-transition-duration: .15s;
     --default-transition-timing-function: cubic-bezier(.4, 0, .2, 1);
-    --default-font-family: var(--font-geist-sans);
-    --default-mono-font-family: var(--font-geist-mono);
+    --default-font-family: var(--font-sans, Arial, Helvetica, sans-serif);
+    --default-mono-font-family: var(--font-mono, monospace);
   }
 
   @supports (color: lab(0% 0 0)) {
     :root, :host {
+      --color-slate-200: lab(91.7353% -.998765 -4.76968);
+      --color-slate-400: lab(65.5349% -2.25151 -14.5072);
+      --color-slate-500: lab(48.0876% -2.03595 -16.5814);
+      --color-slate-800: lab(16.132% -.318035 -14.6672);
       --color-neutral-100: lab(96.52% -.0000298023 .0000119209);
       --color-neutral-200: lab(90.952% 0 -.0000119209);
       --color-neutral-300: lab(84.92% 0 -.0000119209);
@@ -518,10 +526,6 @@
     position: relative;
   }
 
-  .static {
-    position: static;
-  }
-
   .sticky {
     position: sticky;
   }
@@ -691,6 +695,10 @@
     border-color: var(--color-neutral-900);
   }
 
+  :where(.divide-slate-800 > :not(:last-child)) {
+    border-color: var(--color-slate-800);
+  }
+
   .overflow-hidden {
     overflow: hidden;
   }
@@ -746,6 +754,10 @@
 
   .border-neutral-900 {
     border-color: var(--color-neutral-900);
+  }
+
+  .border-slate-800 {
+    border-color: var(--color-slate-800);
   }
 
   .bg-neutral-900 {
@@ -857,11 +869,11 @@
   }
 
   .font-mono {
-    font-family: var(--font-geist-mono);
+    font-family: var(--font-mono, monospace);
   }
 
   .font-sans {
-    font-family: var(--font-geist-sans);
+    font-family: var(--font-sans, Arial, Helvetica, sans-serif);
   }
 
   .text-2xl {
@@ -942,6 +954,22 @@
 
   .text-neutral-500 {
     color: var(--color-neutral-500);
+  }
+
+  .text-slate-200 {
+    color: var(--color-slate-200);
+  }
+
+  .text-slate-400 {
+    color: var(--color-slate-400);
+  }
+
+  .text-slate-500 {
+    color: var(--color-slate-500);
+  }
+
+  .text-white {
+    color: var(--color-white);
   }
 
   .uppercase {
@@ -1142,21 +1170,30 @@
 }
 
 :root {
-  --background: #fff;
-  --foreground: #171717;
+  --background: #1e2229;
+  --foreground: #d1d5db;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #1e2229;
+    --foreground: #d1d5db;
   }
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans), Arial, Helvetica, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+.prose h1, .prose h2, .prose h3, .prose h4, .prose strong {
+  color: #fff !important;
+}
+
+.prose p, .prose li {
+  color: #cbd5e1 !important;
 }
 
 @property --tw-space-y-reverse {
