@@ -1,0 +1,144 @@
+---
+title: "How to Train a Neural Network on Limited Data"
+date: "2026-10-30"
+description: "Exploring convolutional neural networks and techniques that could be used to archive high perfomance with limited data."
+tags: ["Machine Learning", "Deep Learning", "Healthcare", "Computer Vision", "Python"]
+---
+
+# How to Train a Neural Network on Limited Data
+
+Deep learning models are often trained on tens of thousands of labelled data. This data is often not readily available in low resource settings and fields that are obscure or unconventional. When it is, it often requires expertise and manpower for collection and labelling.
+
+In healthcare for instance, building a machine learning system can involve more than finding an algorithm that works. Medical data can be difficult to obtain, organise, and label, sometimes requiring specialist knowledge and considerable human effort. This, among other things, has been a hindrance to the capabilities of deep learning.
+
+I have been interested in a deceptively simple question: **How much data does a neural network actually need to be able to classify anything, really?**
+
+To investigate this problem, I built and trained a convolutional neural network from scratch using NumPy and Pandas to classify chest X-rays as normal or showing pneumonia using the RSNA pneumonia classification challenge dataset and explored techniques and algorithms that can help improve the training of small neural networks when working with limited data.
+
+## Why a Convolutional Neural Network?
+
+There's no scientific reason for picking to work with CNNs—I just thought they were cool and I wanted to learn about them. If you would like to work on something similar you can try with any type of neural network you're comfortable with (I recommend a Feedforward neural network if you're a beginner and a transformer if you're an expert).
+
+What is a Convolutional Neural Network anyway?
+A convolutional neural network is a specialised type of neural network designed to process grid-like visual data such as images and videos. During training, a CNN adjusts its internal parameters using examples from the training dataset. The goal is to learn patterns that help it make better predictions on images it hasn't seen before.
+
+Computers don't see images in quite the same way we do. Images and videos are essentially made up of tiny grids of units called pixels, put simply numbers representing the color and intensity at that particular point. Typically each pixel is composed of three color channels: Red, Green, and Blue.
+
+Since X-rays are in black and white, in contrast to normal images, they are composed of pixels each carrying a single value that represents the intensity at that point ranging from 0 (Black) to 255 (White).
+
+I began by preparing the chest X-ray images and their labels, then splitting the data into training and evaluation sets. The training set would teach the model to recognise patterns associated with normal lungs and pneumonia, while the evaluation set would help me assess how well it performed on images it hadn't trained on.
+
+```python
+import pandas as pd
+import numpy as np
+
+# Load labels and set up train/evaluation split
+labels_df = pd.read_csv('./rsna_data/stage_2_train_labels.csv')
+
+# Splitting into training and evaluation sets
+train_df = labels_df.sample(frac=0.8, random_state=42)
+eval_df = labels_df.drop(train_df.index)
+```
+
+During training, the CNN made predictions about the X-ray images and compared them with their labels. It then used the resulting error to adjust its parameters, gradually learning patterns that might help it distinguish between normal lungs and those showing pneumonia.
+
+```python
+import torch
+import torch.nn as nn
+import torch.nn.functional as F
+
+# Definition of the convolutional neural network
+class ChestXRayCNN(nn.Module):
+    def __init__(self):
+        super(ChestXRayCNN, self).__init__()
+        self.conv1 = nn.Conv2d(1, 16, kernel_size=3, padding=1)
+        self.pool = nn.MaxPool2d(2, 2)
+        self.fc1 = nn.Linear(16 * 112 * 112, 64)
+        self.fc2 = nn.Linear(64, 1)
+
+    def forward(self, x):
+        x = self.pool(F.relu(self.conv1(x)))
+        x = x.view(x.size(0), -1)
+        x = F.relu(self.fc1(x))
+        return torch.sigmoid(self.fc2(x))
+
+model = ChestXRayCNN()
+criterion = nn.BCELoss()
+optimizer = torch.optim.Adam(model.parameters(), lr=0.001)
+
+# Training Loop
+for epoch in range(epochs):
+    for images, labels in train_loader:
+        optimizer.zero_grad()
+        outputs = model(images)
+        loss = criterion(outputs, labels)
+        loss.backward()
+        optimizer.step()
+```
+
+After training the model I got an accuracy of 79.6% and sensitivity of 98.3%
+
+```python
+from sklearn.metrics import accuracy_score, recall_score
+
+# Measuring accuracy and sensitivity on the evaluation set
+accuracy = accuracy_score(y_true, y_pred)
+sensitivity = recall_score(y_true, y_pred)
+
+print(f"Accuracy: {accuracy * 100:.1f}%")
+print(f"Sensitivity: {sensitivity * 100:.1f}%")
+```
+
+My first question was whether that was good. My second was whether I could now call myself a genius.
+
+Before making any such announcements, though, I needed to understand what my results actually meant.
+
+Accuracy is a measure of the overall proportion that the model got right (both positive and negative). Sensitivity measures the proportion of actual positive cases that the model correctly identifies as positive. Imagine training a model using just 20 labelled X-rays (kinda ridiculous but just so I make a point): 15 showing normal lungs and five showing pneumonia. Suppose the model takes the lazy route and classifies every X-ray as normal. It would correctly classify all 15 normal scans but miss every single case of pneumonia.
+
+The model would still achieve an accuracy of 75% (15 out of 20 predictions correct). Not terrible at first glance, right? But its sensitivity would be 0%, because it failed to identify a single pneumonia case.
+
+This is why accuracy alone can be misleading, especially in medical classification. A model can appear to perform reasonably well while failing at the very task we need it to do. For my project, I needed to look beyond overall accuracy and investigate how well the model actually detected pneumonia.
+
+My plan was to establish a baseline using the available data (60,000 images) and then systematically pare it down while noticing how the performance changed. When I reached half my initial accuracy and sensitivity, I decided to research algorithms that could be used to compensate for the lost performance without adding any more images. This problem of training neural networks on limited data is actively being studied in the scientific community with great mathematicians and researchers suggesting different approaches. I decided to experiment with data augmentation, and read up on methods that I could not try due to limited resources, such as transfer learning and semi-supervised learning.
+
+## Semi-Supervised Learning
+
+Semi-supervised learning is a machine learning approach that trains a model using a small amount of labeled data combined with a large amount of unlabeled data. In this approach, supervised and unsupervised learning are combined for classification and regression.
+
+This is really interesting in medical imaging, where obtaining and labelling data can require considerable time, expertise, and resources.
+
+I haven't experimented with this approach yet, so I'll leave the deeper explanation for a future post once I've had the opportunity to implement it and see how it performs.
+
+## Transfer Learning
+
+Transfer learning is a machine learning technique where a model developed for a source task is reused as the starting point for a related target task.
+
+## Data Augmentation
+
+In my opinion, data augmentation offers one of the most beautiful and creative solutions to the problem of limited training data.
+
+Instead of collecting more images, why not make better use of the ones we already have?
+
+It is the process of artificially expanding training datasets by applying modified or transformed versions of existing data samples.
+
+```python
+from torchvision import transforms
+
+# Geometric and color space transformations for X-ray data augmentation
+augmentation_transform = transforms.Compose([
+    transforms.RandomResizedCrop(224, scale=(0.8, 1.0)),
+    transforms.RandomRotation(degrees=5), # Conservative rotation
+    transforms.ColorJitter(brightness=0.1, contrast=0.1),
+    transforms.ToTensor()
+])
+```
+
+I used two methods in my experiment: geometric and color space transformations. I randomly cropped, zoomed, and stretched the data sample that had achieved half my initial results. I applied these techniques to the reduced dataset from my earlier experiments, where the model's performance had fallen to roughly half of my initial results.
+
+However, medical images introduced an important complication: not every transformation that creates a different image creates a useful training example.
+
+With ordinary photographs, flipping or rotating an image might preserve its meaning. With chest X-rays, transformations must be chosen more carefully because they can alter medically relevant features or create images that don't reflect realistic clinical examples.
+
+For instance, flipping an X-ray horizontally may reverse the apparent anatomical arrangement of the chest. Rotations and aggressive geometric distortions can also make images less representative of real scans. I therefore had to consider whether each transformation was appropriate for the task rather than assuming that more augmentation would automatically produce better results.
+
+I am excited to learn more about how Data augmentation could be used in obscure fields particulaly in health and medicine.
