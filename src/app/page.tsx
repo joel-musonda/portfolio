@@ -45,7 +45,7 @@ export default function Home() {
         </h2>
         <div className="text-neutral-400 text-base leading-relaxed space-y-4">
           <p>
-            I&apos;m currently doing my A-Levels at <a href="https://cruciblelusaka.org" target="_blank" rel="noreferrer" className="text-neutral-200 underline underline-offset-4 hover:text-white transition-colors">Crucible International Leadership Academy of Lusaka</a>. 
+            I&apos;m currently studying A-Levels at <a href="https://cruciblelusaka.org" target="_blank" rel="noreferrer" className="text-neutral-200 underline underline-offset-4 hover:text-white transition-colors">Crucible International Leadership Academy of Lusaka</a>. 
             I enjoy reading books (I occasionally write book reviews here). I&apos;m deeply interested in human ingenuity, learning, and working with like-minded individuals to build products that solve real-world problems. I love to learn and share knowledge, which is why I write about my experiences and learnings on this blog.
           </p>
           <p>
