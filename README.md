@@ -6,11 +6,10 @@ A minimalist, high-performance personal portfolio and blogging platform built wi
 
 ## 📸 Screenshots
 
-*(Add screenshots of your home page, blog index, and individual blog post views here)*
 
-| Home Page | Blog Post View |
+| Home Page | Projects View |
 | :---: | :---: |
-| ![Home Page Placeholder](./screenshots/home.png) | ![Blog Post Placeholder](./screenshots/blogs.png) |
+| ![Home Page Placeholder](./screenshots/home.png) | ![Projects Post Placeholder](./screenshots/blogs.png) |
 
 ---
 
