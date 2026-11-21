@@ -1,8 +1,18 @@
 import Link from 'next/link'
 import { posts } from '@velite'
 
+function formatDate(dateString: string) {
+  const date = new Date(dateString)
+  return new Intl.DateTimeFormat('en-US', {
+    month: 'short', // use 'long' for "November", or '2-digit' for "11"
+    day: 'numeric',
+    year: 'numeric',
+    timeZone: 'UTC', // prevents off-by-one-day shifts from timezone conversion
+  }).format(date)
+}
+
 export default function BlogPageIndex() {
-  const sortedPosts = posts.sort(
+  const sortedPosts = [...posts].sort(
     (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
   )
 
@@ -26,8 +36,8 @@ export default function BlogPageIndex() {
               <h2 className="font-medium text-slate-200 group-hover:text-white transition-colors">
                 {post.title}
               </h2>
-              <time className="text-xs text-slate-500 font-mono">
-                {post.date}
+              <time dateTime={post.date} className="text-xs text-slate-500 font-mono">
+                {formatDate(post.date)}
               </time>
             </div>
             <p className="mt-2 text-sm text-slate-400 line-clamp-2">
