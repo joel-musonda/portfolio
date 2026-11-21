@@ -5,7 +5,7 @@ const faqs = [
   },
   {
     question: 'Will we ever come up with better ways of measuring economic growth?',
-    answer: 'It\'s a complex issue, but I believe we can develop more nuanced metrics that capture the true value created by innovation and technological advancement.'
+    answer: 'It\'s a complex issue, but I believe we can develop more nuanced metrics that capture the true value created by innovation and technological advancement. This could involve incorporating measures of social well-being, environmental sustainability, and the distribution of wealth and resources. We could explore alternative indicators such as the Human Development Index (HDI), Genuine Progress Indicator (GPI), or the Social Progress Index (SPI) to provide a more comprehensive view of economic growth and societal progress.'
   },
   {
     question: 'How can we aid machine to machine interactions?',

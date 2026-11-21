@@ -13,6 +13,7 @@
 # Velite generated files and cache
 /.velite
 .velite/
+.next/
 
 # Misc
 .DS_Store
@@ -23,7 +24,7 @@
 
 # Vercel
 .vercel
-portfolio
+/portfolio
 
 # Debug logs
 npm-debug.log*
