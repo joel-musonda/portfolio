@@ -14,9 +14,19 @@ const featuredProjects = [
   }
 ]
 
+function formatDate(dateString: string) {
+  const date = new Date(dateString)
+  return new Intl.DateTimeFormat('en-US', {
+    month: 'short',
+    day: 'numeric',
+    year: 'numeric',
+    timeZone: 'UTC',
+  }).format(date)
+}
+
 export default function Home() {
-  // Sort posts by date (newest first) and limit to latest 3 if desired
-  const sortedPosts = posts.sort(
+  // Sort posts by date (newest first) without mutating the original array
+  const sortedPosts = [...posts].sort(
     (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
   )
 
@@ -26,7 +36,7 @@ export default function Home() {
       {/* Hero Section */}
       <section className="space-y-4 pt-4">
         <h1 className="text-3xl font-bold tracking-tight text-neutral-100 sm:text-4xl">
-          Hi, I'm Joel
+          Hi, I&apos;m Joel
         </h1>
         <p className="text-neutral-400 leading-relaxed text-base">
         A Computer Programmer, writer and aspiring AI Researcher. I&apos;m fascinated by neural networks, human-computer interaction and deep learning.
@@ -64,7 +74,7 @@ export default function Home() {
       <section id="projects" className="space-y-6">
         <div className="flex justify-between items-baseline">
           <h2 className="text-sm font-mono text-neutral-500 uppercase tracking-wider">
-            // What I'm Working on
+            // What I&apos;m Working on
           </h2>
           <Link href="/projects" className="text-xs font-mono text-neutral-400 hover:text-white transition-colors">
             View all projects →
@@ -125,8 +135,8 @@ export default function Home() {
               <span className="font-medium text-neutral-200 group-hover:text-white">
                 {post.title}
               </span>
-              <time className="text-xs text-neutral-500 font-mono">
-                {post.date}
+              <time dateTime={post.date} className="text-xs text-neutral-500 font-mono">
+                {formatDate(post.date)}
               </time>
             </Link>
           ))}

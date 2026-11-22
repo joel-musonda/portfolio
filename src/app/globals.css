@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@plugin "@tailwindcss/typography";
 
 :root {
   --background: #1e2229;
@@ -12,13 +13,6 @@
   --font-mono: var(--font-mono, monospace);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #1e2229;
-    --foreground: #d1d5db;
-  }
-}
-
 body {
   background: var(--background);
   color: var(--foreground);
@@ -26,11 +20,127 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* Ensure clean high-contrast blog headings and bold emphasis */
-.prose h1, .prose h2, .prose h3, .prose h4, .prose strong {
-  color: #ffffff !important;
+/* Readable editorial spacing & slate contrast for MDX posts */
+.prose {
+  --tw-prose-body: #d1d5db;
+  --tw-prose-headings: #ffffff;
+  --tw-prose-lead: #e5e7eb;
+  --tw-prose-bold: #ffffff;
+  --tw-prose-quotes: #f3f4f6;
+  --tw-prose-quote-borders: #4b5563;
+  --tw-prose-code: #f9fafb;
+  --tw-prose-pre-bg: #15181e;
+  --tw-prose-pre-code: #e5e7eb;
+  --tw-prose-hr: #2d333d;
 }
 
-.prose p, .prose li {
-  color: #cbd5e1 !important;
+.prose p {
+  margin-top: 1.35rem;
+  margin-bottom: 1.35rem;
+  line-height: 1.85;
+  color: #d1d5db;
+}
+
+.prose h2 {
+  margin-top: 2.75rem;
+  margin-bottom: 1rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 1px solid #2a2f3a;
+  font-size: 1.35rem;
+  line-height: 1.4;
+  font-weight: 600;
+  color: #ffffff;
+  letter-spacing: -0.015em;
+}
+
+.prose h3 {
+  margin-top: 2rem;
+  margin-bottom: 0.75rem;
+  font-size: 1.125rem;
+  line-height: 1.45;
+  font-weight: 600;
+  color: #f3f4f6;
+}
+
+.prose blockquote {
+  margin-top: 1.75rem;
+  margin-bottom: 1.75rem;
+  padding-left: 1.15rem;
+  border-left-width: 3px;
+  border-left-color: #64748b;
+  font-style: normal;
+  color: #f1f5f9;
+}
+
+.prose pre {
+  margin-top: 1.75rem;
+  margin-bottom: 1.75rem;
+  padding: 1rem 1.25rem;
+  border-radius: 0.5rem;
+  border: 1px solid #2a2f3a;
+  background-color: #15181e;
+  overflow-x: auto;
+  font-size: 0.875rem;
+  line-height: 1.7;
+}
+
+.prose :not(pre) > code {
+  background-color: #282d37;
+  color: #f3f4f6;
+  padding: 0.15rem 0.375rem;
+  border-radius: 0.25rem;
+  font-size: 0.875em;
+  font-weight: 500;
+}
+
+.prose :not(pre) > code::before,
+.prose :not(pre) > code::after {
+  content: none;
+}
+
+.prose hr {
+  margin-top: 2.5rem;
+  margin-bottom: 2.5rem;
+  border-color: #2a2f3a;
+}
+
+.prose .lead {
+  font-size: 1.125rem;
+  line-height: 1.75;
+  color: #f3f4f6;
+  font-weight: 500;
+}
+
+.prose .closing-question {
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  padding: 1rem 1.25rem;
+  border-radius: 0.5rem;
+  background-color: #242932;
+  border-left: 3px solid #94a3b8;
+  color: #ffffff;
+}
+
+[data-rehype-pretty-code-figure] {
+  margin-top: 1.75rem;
+  margin-bottom: 1.75rem;
+}
+
+[data-rehype-pretty-code-figure] pre {
+  background-color: #15181e;
+  border: 1px solid #2a2f3a;
+  border-radius: 0.5rem;
+  padding: 1rem 0;
+  overflow-x: auto;
+  font-size: 0.875rem;
+  line-height: 1.7;
+}
+
+[data-rehype-pretty-code-figure] code {
+  display: grid;
+  font-family: var(--font-mono), monospace;
+}
+
+[data-rehype-pretty-code-figure] [data-line] {
+  padding: 0 1.25rem;
 }

@@ -1,4 +1,5 @@
 import { defineConfig, defineCollection, s } from 'velite'
+import rehypePrettyCode from 'rehype-pretty-code'
 
 const posts = defineCollection({
   name: 'Post',
@@ -10,7 +11,7 @@ const posts = defineCollection({
       date: s.isodate(),
       summary: s.string().max(300),
       published: s.boolean().default(true),
-      code: s.mdx(), // Must be s.mdx() to compile markdown into an executable JS module string
+      code: s.mdx(),
     })
     .transform((data) => ({
       ...data,
@@ -26,6 +27,17 @@ export default defineConfig({
     base: '/static/',
     name: '[name]-[hash].[ext]',
     clean: true,
+  },
+  mdx: {
+    rehypePlugins: [
+      [
+        rehypePrettyCode as any,
+        {
+          theme: 'one-dark-pro',
+          keepBackground: false, // lets your slate/dark container background show cleanly
+        },
+      ],
+    ],
   },
   collections: { posts },
 })

@@ -1,11 +1,21 @@
 import { notFound } from "next/navigation";
-import { posts } from '@velite';
+import { posts } from "@velite";
 import { MdxContent } from "@/components/MdxContent";
 
 interface PostPageProps {
   params: Promise<{
     slug: string;
   }>;
+}
+
+function formatDate(dateString: string) {
+  const date = new Date(dateString);
+  return new Intl.DateTimeFormat("en-US", {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+    timeZone: "UTC",
+  }).format(date);
 }
 
 export async function generateStaticParams() {
@@ -15,7 +25,6 @@ export async function generateStaticParams() {
 }
 
 export default async function BlogPostPage({ params }: PostPageProps) {
-  // Await params in Next.js 15/16
   const { slug } = await params;
   const post = posts.find((p) => p.slugAsParams === slug);
 
@@ -24,16 +33,20 @@ export default async function BlogPostPage({ params }: PostPageProps) {
   }
 
   return (
-    <article className="mx-auto max-w-2xl px-4 py-16">
-      <header className="mb-8 border-b border-neutral-900 pb-8">
-        <h1 className="text-3xl font-bold tracking-tight text-neutral-100">
+    <article className="mx-auto max-w-2xl px-4 py-12 sm:py-16">
+      <header className="mb-10 border-b border-neutral-800 pb-8">
+        <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-neutral-100 leading-snug">
           {post.title}
         </h1>
-        <p className="mt-2 text-sm text-neutral-500 font-mono">{post.date}</p>
+        <time
+          dateTime={post.date}
+          className="mt-3 block text-xs text-neutral-400 font-mono"
+        >
+          {formatDate(post.date)}
+        </time>
       </header>
 
-      {/* Renders your MDX content with Tailwind typography prose styles */}
-      <div className="prose prose-invert prose-neutral max-w-none">
+      <div className="prose prose-invert max-w-none">
         <MdxContent code={post.code} />
       </div>
     </article>
