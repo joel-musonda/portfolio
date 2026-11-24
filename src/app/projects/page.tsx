@@ -49,7 +49,7 @@ const projects = [
     title: 'Ping ',
     description: 'A collaborative social platform for writing blogs and articles in notebooks with chapters instead of standlone posts. users can organize thoughts, learning journeys, and articles.',
     tags: ['next.js', 'typescript', 'tailwind'],
-    link: 'pingblogs.com',
+    link: 'https://pingblogs.com',
     github: 'https://github.com/joel-musonda/ping-app',
     year: '2026',
     image: '/static/projects/ping.png',
