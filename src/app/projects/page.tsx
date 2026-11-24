@@ -31,7 +31,7 @@ const projects = [
     title: 'Nzelu AI',
     description: 'An AI chatbot built using retrieval-augmented generation (RAG), langchain, Pinecone vector database and Gemini integrations. It lives in your documents and grounds the LLM responses in your data',
     tags: ['python', 'streamlit', 'pinecone', 'gemini api'],
-    link: 'nzeluai.streamlit.app',
+    link: 'https://nzeluai.streamlit.app/',
     github: 'https://github.com/joel-musonda/nzelu-ai',
     year: '2026',
     image: '/static/projects/nzelu.png',
