@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import { posts } from "@velite";
 import { MdxContent } from "@/components/MdxContent";
+import { ScrollTracker } from "@/components/ScrollTracker";
 
 interface PostPageProps {
   params: Promise<{
@@ -45,9 +46,11 @@ export default async function BlogPostPage({ params }: PostPageProps) {
         </p>
       </header>
 
-      <div className="prose prose-invert max-w-none">
+      <div id="post-content" className="prose prose-invert max-w-none">
         <MdxContent code={post.code} />
       </div>
+
+      <ScrollTracker targetId="post-content" />
     </article>
   );
 }

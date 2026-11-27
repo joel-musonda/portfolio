@@ -36,11 +36,9 @@ export default function BlogPageIndex() {
               <h2 className="font-medium text-slate-200 group-hover:text-white transition-colors">
                 {post.title}
               </h2>
-              <span className="shrink-0 whitespace-nowrap text-xs text-slate-500 font-mono">
-                <time dateTime={post.date}>{formatDate(post.date)}</time>
-                {' · '}
-                {post.metadata.readingTime} min read
-              </span>
+              <time dateTime={post.date} className="text-xs text-slate-500 font-mono">
+                {formatDate(post.date)}
+              </time>
             </div>
             <p className="mt-2 text-sm text-slate-400 line-clamp-2">
               {post.summary}
