@@ -39,6 +39,7 @@ export function ScrollTracker({ targetId }: { targetId: string }) {
   const [progress, setProgress] = useState(0)
   const [sections, setSections] = useState<Section[]>([])
   const [activeId, setActiveId] = useState<string | null>(null)
+  const [open, setOpen] = useState(false)
 
   useEffect(() => {
     const container = document.getElementById(targetId)
@@ -90,7 +91,13 @@ export function ScrollTracker({ targetId }: { targetId: string }) {
       aria-label="Article progress"
       className="group fixed right-6 top-1/2 z-40 hidden -translate-y-1/2 lg:block"
     >
-      <div className="flex flex-col items-center gap-2.5 rounded-full border border-neutral-800 bg-neutral-900/80 px-2.5 py-4 backdrop-blur-md shadow-lg">
+      <button
+        type="button"
+        aria-label="Show sections"
+        aria-expanded={open}
+        onClick={() => setOpen((o) => !o)}
+        className="flex flex-col items-center gap-2.5 rounded-full border border-neutral-800 bg-neutral-900/80 px-2.5 py-4 backdrop-blur-md shadow-lg"
+      >
         {Array.from({ length: TICK_COUNT }, (_, i) => (
           <span
             key={i}
@@ -99,10 +106,14 @@ export function ScrollTracker({ targetId }: { targetId: string }) {
             }`}
           />
         ))}
-      </div>
+      </button>
 
       {sections.length > 0 && (
-        <div className="pointer-events-none absolute right-full top-1/2 -translate-y-1/2 pr-3 opacity-0 transition-opacity duration-200 group-hover:pointer-events-auto group-hover:opacity-100 group-focus-within:pointer-events-auto group-focus-within:opacity-100">
+        <div
+          className={`absolute right-full top-1/2 -translate-y-1/2 pr-3 transition-opacity duration-200 group-hover:pointer-events-auto group-hover:opacity-100 group-focus-within:pointer-events-auto group-focus-within:opacity-100 ${
+            open ? 'pointer-events-auto opacity-100' : 'pointer-events-none opacity-0'
+          }`}
+        >
           <ul className="w-56 space-y-1 rounded-xl border border-neutral-800 bg-neutral-900/95 p-3 text-xs shadow-lg backdrop-blur-md">
             {sections.map((section) => (
               <li key={section.id}>
@@ -114,6 +125,7 @@ export function ScrollTracker({ targetId }: { targetId: string }) {
                       .getElementById(section.id)
                       ?.scrollIntoView({ behavior: 'smooth', block: 'start' })
                     history.replaceState(null, '', `#${section.id}`)
+                    setOpen(false)
                   }}
                   className={`block truncate rounded px-2 py-1 transition-colors hover:bg-neutral-800 hover:text-neutral-100 ${
                     section.id === activeId ? 'text-neutral-100' : 'text-neutral-500'
