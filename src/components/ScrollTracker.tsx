@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 
 interface Section {
   id: string
@@ -39,9 +39,6 @@ export function ScrollTracker({ targetId }: { targetId: string }) {
   const [progress, setProgress] = useState(0)
   const [sections, setSections] = useState<Section[]>([])
   const [activeId, setActiveId] = useState<string | null>(null)
-  const [open, setOpen] = useState(false)
-  const navRef = useRef<HTMLElement>(null)
-  const buttonRef = useRef<HTMLButtonElement>(null)
 
   useEffect(() => {
     const container = document.getElementById(targetId)
@@ -88,42 +85,17 @@ export function ScrollTracker({ targetId }: { targetId: string }) {
     }
   }, [targetId])
 
-  useEffect(() => {
-    if (!open) return
-    const onPointerDown = (e: PointerEvent) => {
-      if (!navRef.current?.contains(e.target as Node)) setOpen(false)
-    }
-    const onKeyDown = (e: KeyboardEvent) => {
-      if (e.key !== 'Escape') return
-      setOpen(false)
-      if (navRef.current?.contains(document.activeElement)) buttonRef.current?.focus()
-    }
-    document.addEventListener('pointerdown', onPointerDown)
-    document.addEventListener('keydown', onKeyDown)
-    return () => {
-      document.removeEventListener('pointerdown', onPointerDown)
-      document.removeEventListener('keydown', onKeyDown)
-    }
-  }, [open])
-
   const filledTicks = Math.round(progress * (TICK_COUNT - 1))
 
   return (
     <nav
-      ref={navRef}
       aria-label="Article progress"
-      onBlur={(e) => {
-        if (!e.currentTarget.contains(e.relatedTarget as Node | null)) setOpen(false)
-      }}
       className="group fixed right-6 top-1/2 z-40 hidden -translate-y-1/2 lg:block"
     >
-      <button
-        ref={buttonRef}
-        type="button"
-        aria-label="Show sections"
-        aria-expanded={open}
-        onClick={() => setOpen((o) => !o)}
-        className="flex flex-col items-center gap-2.5 rounded-full border border-neutral-800 bg-neutral-900/80 px-2.5 py-4 backdrop-blur-md shadow-lg"
+      <div
+        tabIndex={0}
+        aria-label="Reading progress"
+        className="flex flex-col items-center gap-2.5 rounded-full border border-neutral-800 bg-neutral-900/80 px-2.5 py-4 backdrop-blur-md shadow-lg outline-none focus-visible:ring-1 focus-visible:ring-neutral-500"
       >
         {Array.from({ length: TICK_COUNT }, (_, i) => (
           <span
@@ -133,13 +105,11 @@ export function ScrollTracker({ targetId }: { targetId: string }) {
             }`}
           />
         ))}
-      </button>
+      </div>
 
       {sections.length > 0 && (
         <div
-          className={`absolute right-full top-1/2 -translate-y-1/2 pr-3 transition-[opacity,visibility] duration-200 group-hover:visible group-hover:opacity-100 ${
-            open ? 'visible opacity-100' : 'invisible opacity-0'
-          }`}
+          className="invisible absolute right-full top-1/2 -translate-y-1/2 pr-3 opacity-0 transition-[opacity,visibility] duration-200 group-hover:visible group-hover:opacity-100 group-has-[:focus-visible]:visible group-has-[:focus-visible]:opacity-100"
         >
           <ul className="w-56 space-y-1 rounded-xl border border-neutral-800 bg-neutral-900/95 p-3 text-xs shadow-lg backdrop-blur-md">
             {sections.map((section) => (
@@ -152,7 +122,6 @@ export function ScrollTracker({ targetId }: { targetId: string }) {
                     target?.scrollIntoView({ behavior: 'smooth', block: 'start' })
                     target?.focus({ preventScroll: true })
                     history.replaceState(null, '', `#${section.id}`)
-                    setOpen(false)
                   }}
                   className={`block truncate rounded px-2 py-1 transition-colors hover:bg-neutral-800 hover:text-neutral-100 ${
                     section.id === activeId ? 'text-neutral-100' : 'text-neutral-500'
