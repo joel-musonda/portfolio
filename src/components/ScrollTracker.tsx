@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 interface Section {
   id: string
@@ -40,6 +40,7 @@ export function ScrollTracker({ targetId }: { targetId: string }) {
   const [sections, setSections] = useState<Section[]>([])
   const [activeId, setActiveId] = useState<string | null>(null)
   const [open, setOpen] = useState(false)
+  const navRef = useRef<HTMLElement>(null)
 
   useEffect(() => {
     const container = document.getElementById(targetId)
@@ -86,11 +87,31 @@ export function ScrollTracker({ targetId }: { targetId: string }) {
     }
   }, [targetId])
 
+  useEffect(() => {
+    if (!open) return
+    const onPointerDown = (e: PointerEvent) => {
+      if (!navRef.current?.contains(e.target as Node)) setOpen(false)
+    }
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setOpen(false)
+    }
+    document.addEventListener('pointerdown', onPointerDown)
+    document.addEventListener('keydown', onKeyDown)
+    return () => {
+      document.removeEventListener('pointerdown', onPointerDown)
+      document.removeEventListener('keydown', onKeyDown)
+    }
+  }, [open])
+
   const filledTicks = Math.round(progress * (TICK_COUNT - 1))
 
   return (
     <nav
+      ref={navRef}
       aria-label="Article progress"
+      onBlur={(e) => {
+        if (!e.currentTarget.contains(e.relatedTarget as Node | null)) setOpen(false)
+      }}
       className="group fixed right-6 top-1/2 z-40 hidden -translate-y-1/2 lg:block"
     >
       <button
@@ -112,7 +133,7 @@ export function ScrollTracker({ targetId }: { targetId: string }) {
 
       {sections.length > 0 && (
         <div
-          className={`absolute right-full top-1/2 -translate-y-1/2 pr-3 transition-opacity duration-200 group-hover:pointer-events-auto group-hover:opacity-100 group-focus-within:pointer-events-auto group-focus-within:opacity-100 ${
+          className={`absolute right-full top-1/2 -translate-y-1/2 pr-3 transition-opacity duration-200 group-hover:pointer-events-auto group-hover:opacity-100 ${
             open ? 'pointer-events-auto opacity-100' : 'pointer-events-none opacity-0'
           }`}
         >
