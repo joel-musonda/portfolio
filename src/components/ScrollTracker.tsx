@@ -41,6 +41,7 @@ export function ScrollTracker({ targetId }: { targetId: string }) {
   const [activeId, setActiveId] = useState<string | null>(null)
   const [open, setOpen] = useState(false)
   const navRef = useRef<HTMLElement>(null)
+  const buttonRef = useRef<HTMLButtonElement>(null)
 
   useEffect(() => {
     const container = document.getElementById(targetId)
@@ -93,7 +94,9 @@ export function ScrollTracker({ targetId }: { targetId: string }) {
       if (!navRef.current?.contains(e.target as Node)) setOpen(false)
     }
     const onKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') setOpen(false)
+      if (e.key !== 'Escape') return
+      setOpen(false)
+      if (navRef.current?.contains(document.activeElement)) buttonRef.current?.focus()
     }
     document.addEventListener('pointerdown', onPointerDown)
     document.addEventListener('keydown', onKeyDown)
@@ -115,6 +118,7 @@ export function ScrollTracker({ targetId }: { targetId: string }) {
       className="group fixed right-6 top-1/2 z-40 hidden -translate-y-1/2 lg:block"
     >
       <button
+        ref={buttonRef}
         type="button"
         aria-label="Show sections"
         aria-expanded={open}
@@ -133,8 +137,8 @@ export function ScrollTracker({ targetId }: { targetId: string }) {
 
       {sections.length > 0 && (
         <div
-          className={`absolute right-full top-1/2 -translate-y-1/2 pr-3 transition-opacity duration-200 group-hover:pointer-events-auto group-hover:opacity-100 ${
-            open ? 'pointer-events-auto opacity-100' : 'pointer-events-none opacity-0'
+          className={`absolute right-full top-1/2 -translate-y-1/2 pr-3 transition-[opacity,visibility] duration-200 group-hover:visible group-hover:opacity-100 ${
+            open ? 'visible opacity-100' : 'invisible opacity-0'
           }`}
         >
           <ul className="w-56 space-y-1 rounded-xl border border-neutral-800 bg-neutral-900/95 p-3 text-xs shadow-lg backdrop-blur-md">
