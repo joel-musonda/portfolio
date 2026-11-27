@@ -55,6 +55,8 @@ export function ScrollTracker({ targetId }: { targetId: string }) {
       }
       usedIds.add(el.id)
       el.style.scrollMarginTop = '6rem'
+      el.tabIndex = -1
+      el.style.outline = 'none'
     })
 
     const onScroll = () => {
@@ -121,9 +123,9 @@ export function ScrollTracker({ targetId }: { targetId: string }) {
                   href={`#${section.id}`}
                   onClick={(e) => {
                     e.preventDefault()
-                    document
-                      .getElementById(section.id)
-                      ?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+                    const target = document.getElementById(section.id)
+                    target?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+                    target?.focus({ preventScroll: true })
                     history.replaceState(null, '', `#${section.id}`)
                     setOpen(false)
                   }}
