@@ -90,7 +90,7 @@ export default function Home() {
                 <h3 className="font-medium text-neutral-200 group-hover:text-white transition-colors">
                   {project.title}
                 </h3>
-                <span className="text-xs text-neutral-500 font-mono">{project.year}</span>
+                <span className="shrink-0 whitespace-nowrap text-xs text-neutral-500 font-mono">{project.year}</span>
               </div>
               <p className="text-sm text-neutral-400 leading-relaxed">
                 {project.description}
@@ -135,9 +135,11 @@ export default function Home() {
               <span className="font-medium text-neutral-200 group-hover:text-white">
                 {post.title}
               </span>
-              <time dateTime={post.date} className="text-xs text-neutral-500 font-mono">
-                {formatDate(post.date)}
-              </time>
+              <span className="shrink-0 whitespace-nowrap text-xs text-neutral-500 font-mono">
+                <time dateTime={post.date}>{formatDate(post.date)}</time>
+                {' · '}
+                {post.metadata.readingTime} min read
+              </span>
             </Link>
           ))}
           {sortedPosts.length === 0 && (

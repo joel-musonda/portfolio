@@ -38,12 +38,11 @@ export default async function BlogPostPage({ params }: PostPageProps) {
         <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-neutral-100 leading-snug">
           {post.title}
         </h1>
-        <time
-          dateTime={post.date}
-          className="mt-3 block text-xs text-neutral-400 font-mono"
-        >
-          {formatDate(post.date)}
-        </time>
+        <p className="mt-3 text-xs text-neutral-400 font-mono">
+          <time dateTime={post.date}>{formatDate(post.date)}</time>
+          {" · "}
+          {post.metadata.readingTime} min read
+        </p>
       </header>
 
       <div className="prose prose-invert max-w-none">
