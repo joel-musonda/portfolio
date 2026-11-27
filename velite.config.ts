@@ -11,6 +11,7 @@ const posts = defineCollection({
       date: s.isodate(),
       summary: s.string().max(300),
       published: s.boolean().default(true),
+      metadata: s.metadata(),
       code: s.mdx(),
     })
     .transform((data) => ({
